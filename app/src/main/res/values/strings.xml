@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">globetrotter</string>
+    <!--Welcome Page-->
+    <string name="login">Login</string>
+    <string name="register">Register!</string>
+    <!--Login Page-->
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <!--Register Page-->
+    <string name="passwordrepeat">Password again</string>
+    <string name="username">Username</string>
+    <string name="namesurname">Name and Surname</string>
+    <!--Error Messages-->
+    <string name="fillblanks">Please fill all the information requested!</string>
+    <string name="fillname">Please fill Name and Surname section!</string>
+    <string name="fillpassword">Please fill Password section!</string>
+    <string name="nomatchpassword">Passwords does not match!</string>
+    <string name="fillusername">Please fill Username section!</string>
+    <string name="fillemail">Please fill E-mail information!</string>
+    <string name="wrongpassword">Wrong Password!</string>
+    <string name="nosuchuser">User does not exist!</string>
+    <string name="validmail">Please enter a valid mail address!</string>
+    <string name="shortpassword">Minimum password character should be 6 characters!</string>
+
+    <!--Information Messages-->
+    <string name="logginin">Logging in...</string>
+    <string name="loginsuccess">Login Successful!</string>
+    <string name="errorcodeoccurred"> : Error code occured</string>
+    <string name="registeringuser">Registration on progress...</string>
+    <string name="registrationsuccess">Registration successful!</string>
+    <string name="registrationfail">Registration is failed!</string>
+
+</resources>

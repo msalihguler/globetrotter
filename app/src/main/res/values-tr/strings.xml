@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">seyyah</string>
+    <!--Welcome Page-->
+    <string name="login">Giriş Yap</string>
+    <string name="register">Kayıt Ol!</string>
+    <!--Login Page-->
+    <string name="email">E-posta</string>
+    <string name="password">Şifre</string>
+    <!--Register Page-->
+    <string name="passwordrepeat">Şifre tekrarı</string>
+    <string name="username">Kullanıcı Adı</string>
+    <string name="namesurname">Ad ve Soyad</string>
+    <!--Error Messages-->
+    <string name="fillblanks">Lütfen istenen bütün bilgileri doldurunuz!</string>
+    <string name="fillname">Lütfen ad ve soyad kısmını doldurun!</string>
+    <string name="fillpassword">Lütfen şifre kısmını doldurun!</string>
+    <string name="nomatchpassword">Şifreler eşleşmiyor!</string>
+    <string name="fillusername">Lütfen kullanıcı adı kısmını doldurun!</string>
+    <string name="fillemail">Lütfen E-posta kısmını doldurun!</string>
+    <string name="wrongpassword">Yanlış Şifre!</string>
+    <string name="nosuchuser">Böyle bir kullanıcı yok!</string>
+    <string name="validmail">Lütfen geçerli bir mail girin!</string>
+    <string name="shortpassword">Şifreniz minimum 6 karakterden oluşmalıdır!</string>
+
+    <!--Information Messages-->
+    <string name="logginin">Giriş yapılıyor...</string>
+    <string name="loginsuccess">Giriş başarılı!</string>
+    <string name="errorcodeoccurred"> : Hata kodu oluştu.</string>
+    <string name="registeringuser">Üye kaydı gerçekleşiyor...</string>
+    <string name="registrationsuccess">Kayıt başarılı!</string>
+    <string name="registrationfail">Kayıt başarısız!</string>
+
+</resources>

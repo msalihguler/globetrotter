@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,9 +24,12 @@ import java.util.ArrayList;
  */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    GoogleApiClient mGoogleApiClient;
+    GoogleMap mMap;
     Button drawroute;
     ArrayList<Marker> markerList;
+    GPSTracker gps;
+    double latitude,longitude;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps);
@@ -39,6 +43,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 mMap.clear();
             }
         });
+        gps = new GPSTracker(this);
+
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+
+           latitude = gps.getLatitude();
+           longitude = gps.getLongitude();
+
+            // \n is for new line
+           // Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
         mapFragment.getMapAsync(this);
     }
 
@@ -64,11 +84,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
                 // Add a marker in Sydney, Australia, and move the camera.
-                LatLng sydney = new LatLng(-34, 151);
-
+                LatLng sydney = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(sydney));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(sydney)      // Sets the center of the map to Mountain View
-                .zoom(10)                   // Sets the zoom
+                .zoom(15)                   // Sets the zoom
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder

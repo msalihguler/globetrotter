@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,7 +35,6 @@ import java.util.List;
  */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    GoogleApiClient mGoogleApiClient;
     GoogleMap mMap;
     Button drawroute;
     ArrayList<Marker> markerList;
@@ -52,13 +50,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         drawroute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!markerList.isEmpty()){
+                    mMap.clear();
+                    for(int i=0;i<markerList.size();i++) {
+                        mMap.addMarker(new MarkerOptions().position(markerList.get(i).getPosition()));
+                    }
+                for(int i=0;i<markerList.size()-1;i++){
 
-                String url = getDirectionsUrl(markerList.get(0).getPosition(), markerList.get(1).getPosition());
+                    String url = getDirectionsUrl(markerList.get(i).getPosition(), markerList.get(i+1).getPosition());
 
-                DownloadTask downloadTask = new DownloadTask();
+                    DownloadTask downloadTask = new DownloadTask();
 
-                // Start downloading json data from Google Directions API
-                downloadTask.execute(url);
+                    downloadTask.execute(url);
+                }
+
+                }
+
+
             }
         });
         gps = new GPSTracker(this);
@@ -69,12 +77,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
            latitude = gps.getLatitude();
            longitude = gps.getLongitude();
 
-            // \n is for new line
-           // Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         }else{
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
             gps.showSettingsAlert();
         }
         mapFragment.getMapAsync(this);
@@ -83,13 +86,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-        @Override
-        public void onMapLongClick(LatLng latLng) {
-
-            Marker m_id = mMap.addMarker(new MarkerOptions().position(latLng));
-            markerList.add(m_id);
-            Log.e("markers", markerList.toString());
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                Marker m_id = mMap.addMarker(new MarkerOptions().position(latLng));
+                markerList.add(m_id);
         }
         });
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -97,7 +99,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public boolean onMarkerClick(Marker marker) {
                 markerList.remove(marker);
                 marker.remove();
-                Log.e("markers", markerList.toString());
                 return false;
             }
         });
@@ -132,7 +133,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters+"&mode=walking";
-
+        Log.e("url",url);
         return url;
     }
     /** A method to download json data from url */
@@ -187,9 +188,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             try{
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
+
             }catch(Exception e){
                 Log.d("Background Task",e.toString());
             }
+
             return data;
         }
 

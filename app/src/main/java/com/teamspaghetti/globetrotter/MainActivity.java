@@ -18,6 +18,9 @@ import com.teamspaghetti.globetrotter.fragment.ProfileFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+
 
 public class MainActivity extends ActionBarActivity {
     TabLayout mainButtonHolder;
@@ -52,6 +55,25 @@ public class MainActivity extends ActionBarActivity {
         tabFour.setImageResource(R.drawable.profile_selector);
         mainButtonHolder.getTabAt(3).setCustomView(tabFour);
         mainButtonHolder.getTabAt(0).getCustomView().setSelected(true);
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500); // half second between each showcase view
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, "1");
+
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(tabOne,
+                getString(R.string.feedexp), getString(R.string.ustood));
+
+        sequence.addSequenceItem(tabTwo,
+                getString(R.string.notificationexp), getString(R.string.ustood));
+
+        sequence.addSequenceItem(tabThree,
+                getString(R.string.messageexp),getString(R.string.ustood));
+        sequence.addSequenceItem(tabFour,
+                getString(R.string.profilexp), getString(R.string.ustood));
+
+        sequence.start();
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

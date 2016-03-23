@@ -30,5 +30,11 @@
     <string name="registeringuser">Üye kaydı gerçekleşiyor...</string>
     <string name="registrationsuccess">Kayıt başarılı!</string>
     <string name="registrationfail">Kayıt başarısız!</string>
-
+    <!--Tutorial Texts-->
+    <string name="feedexp">Güncel akışı buradan görebilirsin...</string>
+    <string name="notificationexp">Bildirimlerini buradan takip edebilirsin...</string>
+    <string name="messageexp">Mesajlarını bu sekmede tutuyoruz...</string>
+    <string name="profilexp">Sana ait profil ve akışa buradan ulaşabilirsin...</string>
+    <string name="mapexp">Bu seni insanlar için rota ekleyebileceğin haritaya yönlendirecek seçenek...</string>
+    <string name="ustood">Anladım!</string>
 </resources>

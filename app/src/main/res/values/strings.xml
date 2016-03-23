@@ -30,4 +30,11 @@
     <string name="registrationsuccess">Registration successful!</string>
     <string name="registrationfail">Registration is failed!</string>
 
+    <!--Tutorial Texts-->
+    <string name="feedexp">You may see tour feed from here...</string>
+    <string name="notificationexp">You can see your notifications here...</string>
+    <string name="messageexp">We keep your messages at this tab...</string>
+    <string name="profilexp">Your profile and your activity feed is here...</string>
+    <string name="mapexp">This will send you to map that you can add routes...</string>
+    <string name="ustood">Got it!</string>
 </resources>

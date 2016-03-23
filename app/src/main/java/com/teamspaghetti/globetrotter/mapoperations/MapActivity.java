@@ -1,5 +1,6 @@
 package com.teamspaghetti.globetrotter.mapoperations;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -34,12 +35,13 @@ import java.util.List;
  * Created by msalihguler on 15.03.2016.
  */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    int markerCounter;
     GoogleMap mMap;
     Button drawroute;
     ArrayList<Marker> markerList;
     GPSTracker gps;
     double latitude,longitude;
+    ProgressDialog pDialog;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps);
@@ -47,17 +49,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         drawroute=(Button)findViewById(R.id.drawroute);
+        pDialog = new ProgressDialog(this);
         drawroute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!markerList.isEmpty()){
+                    pDialog.setMessage("Please Wait...");
                     mMap.clear();
+                    pDialog.show();
                     for(int i=0;i<markerList.size();i++) {
                         mMap.addMarker(new MarkerOptions().position(markerList.get(i).getPosition()));
                     }
-                for(int i=0;i<markerList.size()-1;i++){
+                for(markerCounter=0;markerCounter<markerList.size()-1;markerCounter++){
 
-                    String url = getDirectionsUrl(markerList.get(i).getPosition(), markerList.get(i+1).getPosition());
+                    String url = getDirectionsUrl(markerList.get(markerCounter).getPosition(), markerList.get(markerCounter+1).getPosition());
 
                     DownloadTask downloadTask = new DownloadTask();
 
@@ -205,6 +210,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             ParserTask parserTask = new ParserTask();
 
             // Invokes the thread for parsing the JSON data
+            Log.e("number",String.valueOf(markerCounter));
             parserTask.execute(result);
         }
     }
@@ -265,6 +271,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             // Drawing polyline in the Google Map for the i-th route
             mMap.addPolyline(lineOptions);
+            pDialog.dismiss();
+
         }
     }
 }

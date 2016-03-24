@@ -22,6 +22,8 @@
     <string name="nosuchuser">Böyle bir kullanıcı yok!</string>
     <string name="validmail">Lütfen geçerli bir mail girin!</string>
     <string name="shortpassword">Şifreniz minimum 6 karakterden oluşmalıdır!</string>
+    <string name="pleasewait">Lütfen Bekleyiniz...</string>
+    <string name="nomarker">Haritada hiç bir nokta seçmediniz!</string>
 
     <!--Information Messages-->
     <string name="logginin">Giriş yapılıyor...</string>
@@ -30,6 +32,14 @@
     <string name="registeringuser">Üye kaydı gerçekleşiyor...</string>
     <string name="registrationsuccess">Kayıt başarılı!</string>
     <string name="registrationfail">Kayıt başarısız!</string>
+    <string name="titlemarker">Başlığı buradan değiştirebilirsiniz!</string>
+    <string name="changetitle">Başlığı Değiştir</string>
+    <string name="change">Değiştir</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="currentloc">Şimdiki konumunuz burası!</string>
+    <string name="title">Başlık</string>
+    <string name="detailstoroute">Turla alakalı detayalr</string>
+    <string name="save">Kaydet</string>
     <!--Tutorial Texts-->
     <string name="feedexp">Güncel akışı buradan görebilirsin...</string>
     <string name="notificationexp">Bildirimlerini buradan takip edebilirsin...</string>

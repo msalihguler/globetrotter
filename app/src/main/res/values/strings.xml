@@ -21,6 +21,8 @@
     <string name="nosuchuser">User does not exist!</string>
     <string name="validmail">Please enter a valid mail address!</string>
     <string name="shortpassword">Minimum password character should be 6 characters!</string>
+    <string name="pleasewait">Please Wait...</string>
+    <string name="nomarker">You have not selected any point on map!</string>
 
     <!--Information Messages-->
     <string name="logginin">Logging in...</string>
@@ -29,6 +31,15 @@
     <string name="registeringuser">Registration on progress...</string>
     <string name="registrationsuccess">Registration successful!</string>
     <string name="registrationfail">Registration is failed!</string>
+    <string name="titlemarker">Change title by clicking here!</string>
+    <string name="changetitle">Change Title</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
+    <string name="currentloc">Your current location is here!</string>
+    <string name="title">Title</string>
+    <string name="detailstoroute">Details about route</string>
+    <string name="save">Save</string>
+
 
     <!--Tutorial Texts-->
     <string name="feedexp">You may see tour feed from here...</string>

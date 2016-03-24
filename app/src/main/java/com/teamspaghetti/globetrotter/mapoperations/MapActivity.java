@@ -1,12 +1,17 @@
 package com.teamspaghetti.globetrotter.mapoperations;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.teamspaghetti.globetrotter.CreateTravelPlan;
 import com.teamspaghetti.globetrotter.R;
 
 import org.json.JSONObject;
@@ -37,28 +43,49 @@ import java.util.List;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
     int markerCounter;
     GoogleMap mMap;
-    Button drawroute;
+    ImageButton drawroute,createtour;
     ArrayList<Marker> markerList;
+    ArrayList<Marker> markerListClone;
     GPSTracker gps;
     double latitude,longitude;
     ProgressDialog pDialog;
+    int counter = 0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps);
         markerList = new ArrayList<Marker>();
+        markerListClone = new ArrayList<Marker>();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        drawroute=(Button)findViewById(R.id.drawroute);
+        drawroute=(ImageButton)findViewById(R.id.drawroute);
+        createtour=(ImageButton)findViewById(R.id.goforsaving);
+
         pDialog = new ProgressDialog(this);
+        createtour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(markerList.size()>0) {
+                    Intent intent = new Intent(MapActivity.this, CreateTravelPlan.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MapActivity.this,getResources().getString(R.string.nomarker),Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
         drawroute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!markerList.isEmpty()){
-                    pDialog.setMessage("Please Wait...");
+                    pDialog.setMessage(getResources().getString(R.string.pleasewait));
                     mMap.clear();
+                    markerListClone.clear();
+                    markerListClone= (ArrayList<Marker>) markerList.clone();
+                    markerList.clear();
                     pDialog.show();
-                    for(int i=0;i<markerList.size();i++) {
-                        mMap.addMarker(new MarkerOptions().position(markerList.get(i).getPosition()));
+                    for(int i=0;i<markerListClone.size();i++) {
+                       Marker marker =  mMap.addMarker(new MarkerOptions().position(markerListClone.get(i).getPosition()).title(markerListClone.get(i).getTitle()));
+                        markerList.add(marker);
                     }
                 for(markerCounter=0;markerCounter<markerList.size()-1;markerCounter++){
 
@@ -69,6 +96,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     downloadTask.execute(url);
                 }
 
+                }else{
+                    mMap.clear();
                 }
 
 
@@ -91,28 +120,60 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                Marker m_id = mMap.addMarker(new MarkerOptions().position(latLng));
+                Marker m_id = mMap.addMarker(new MarkerOptions().position(latLng).title(getResources().getString(R.string.titlemarker)));
+                m_id.showInfoWindow();
+
                 markerList.add(m_id);
-        }
+            }
         });
+
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                markerList.remove(marker);
-                marker.remove();
+                    markerList.remove(marker);
+                    marker.remove();
+                    Log.e("markers", markerList.toString());
                 return false;
             }
         });
-                // Add a marker in Sydney, Australia, and move the camera.
-                LatLng sydney = new LatLng(latitude, longitude);
-                mMap.addMarker(new MarkerOptions().position(sydney));
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(final Marker marker) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MapActivity.this, R.style.AppCompatAlertDialogStyle);
+                final EditText edittext = new EditText(MapActivity.this);
+
+                alert.setMessage(getResources().getString(R.string.changetitle));
+
+                alert.setView(edittext);
+
+                alert.setPositiveButton(getResources().getString(R.string.change), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        marker.setTitle(edittext.getText().toString());
+                        marker.showInfoWindow();
+                    }
+                });
+
+                alert.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // what ever you want to do with No option.
+                    }
+                });
+
+                alert.show();
+            }
+        });
+                LatLng currentlocation = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(currentlocation).title(getResources().getString(R.string.currentloc))).showInfoWindow();
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(sydney)      // Sets the center of the map to Mountain View
-                .zoom(15)                   // Sets the zoom
+                .target(currentlocation)      // Sets the center of the map to Mountain View
+                .zoom(18)                   // Sets the zoom
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder

@@ -25,7 +25,7 @@
         <activity android:name=".userprocesses.RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             ></activity>
-        <!--<activity android:name=".MainActivity"></activity>-->
+        <activity android:name=".CreateTravelPlan"></activity>
         <activity android:name=".mapoperations.MapActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

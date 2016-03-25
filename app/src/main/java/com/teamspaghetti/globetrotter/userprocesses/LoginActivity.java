@@ -3,6 +3,7 @@ package com.teamspaghetti.globetrotter.userprocesses;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,12 +34,14 @@ public class LoginActivity extends Activity{
     TextView title;
     EditText email,password;
     ProgressDialog pDialog;
-    String url = "http://localhost:3000/login";
-
+    String url = "http://192.168.1.251:3000/login";
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        sharedPreferences=getSharedPreferences("appPrefs",0);
+
         login=(Button)findViewById(R.id.loginrequest);
         title = (TextView)findViewById(R.id.title_logo);
         email = (EditText)findViewById(R.id.input_email);
@@ -61,7 +64,7 @@ public class LoginActivity extends Activity{
         });
     }
     public class LoginTask extends AsyncTask<String, Void, Integer> {
-
+        String userid,username;
         @Override
         protected void onPreExecute() {
             pDialog = new ProgressDialog(LoginActivity.this);
@@ -100,8 +103,11 @@ public class LoginActivity extends Activity{
                         response.append(line);
                     }
                     JSONObject jsonObject = new JSONObject(response.toString());
-                    Log.e("id",jsonObject.get("userid").toString());
 
+                    username = jsonObject.get("username").toString();
+                    userid = jsonObject.get("userid").toString();
+                    sharedPreferences.edit().putString("username",username).commit();
+                    sharedPreferences.edit().putString("userid",userid).commit();
 
                     result = 1; // Successful
                 } else {

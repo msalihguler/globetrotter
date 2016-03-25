@@ -3,6 +3,8 @@ package com.teamspaghetti.globetrotter.mapoperations;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -36,6 +38,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by msalihguler on 15.03.2016.
@@ -49,7 +52,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     GPSTracker gps;
     double latitude,longitude;
     ProgressDialog pDialog;
-    int counter = 0;
+    String cityname="";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps);
@@ -65,7 +68,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @Override
             public void onClick(View v) {
                 if(markerList.size()>0) {
+                    String latitude ="";
+                    String longitude = "";
+                    String marker_details="";
+                    for(int i=0;i<markerList.size();i++){
+                        latitude += markerList.get(i).getPosition().latitude+"_";
+                        longitude += markerList.get(i).getPosition().longitude+"_";
+                        marker_details += markerList.get(i).getTitle()+"_";
+                    }
                     Intent intent = new Intent(MapActivity.this, CreateTravelPlan.class);
+                    intent.putExtra("latitude",latitude);
+                    intent.putExtra("longitude",longitude);
+                    intent.putExtra("details",marker_details);
                     startActivity(intent);
                 }else{
                     Toast.makeText(MapActivity.this,getResources().getString(R.string.nomarker),Toast.LENGTH_SHORT).show();
@@ -170,7 +184,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
                 LatLng currentlocation = new LatLng(latitude, longitude);
-                mMap.addMarker(new MarkerOptions().position(currentlocation).title(getResources().getString(R.string.currentloc))).showInfoWindow();
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                mMap.addMarker(new MarkerOptions().position(currentlocation).title(cityname)).showInfoWindow();
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentlocation)      // Sets the center of the map to Mountain View
                 .zoom(18)                   // Sets the zoom

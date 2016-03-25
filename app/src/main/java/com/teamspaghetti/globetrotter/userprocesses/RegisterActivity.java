@@ -3,6 +3,7 @@ package com.teamspaghetti.globetrotter.userprocesses;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,12 +33,14 @@ public class RegisterActivity extends Activity {
     Button register;
     EditText namesurname,email,password,password2,username;
     ProgressDialog pDialog;
-    String url = "http://localhost:3000/signup";
+    String url = "http://192.168.1.251:3000/signup";
     TextView title;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page);
+        sharedPreferences=getSharedPreferences("appPrefs",0);
         Typeface font = Typeface.createFromAsset(getAssets(), "deneme.ttf");
         title=(TextView)findViewById(R.id.title_logo);
         title.setTypeface(font);
@@ -89,6 +92,7 @@ public class RegisterActivity extends Activity {
 
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
+        String userid,user;
 
         @Override
         protected void onPreExecute() {
@@ -131,8 +135,10 @@ public class RegisterActivity extends Activity {
                     }
                     JSONObject jsonObject = new JSONObject(response.toString());
                     Log.e("id",jsonObject.get("user_id").toString());
-
-
+                    user = jsonObject.get("username").toString();
+                    userid = jsonObject.get("userid").toString();
+                    sharedPreferences.edit().putString("username",user).commit();
+                    sharedPreferences.edit().putString("userid",userid).commit();
                     result = 1; // Successful
                 } else {
                     result = 0; //"Failed to fetch data!";

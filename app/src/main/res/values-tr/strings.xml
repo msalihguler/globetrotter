@@ -38,7 +38,7 @@
     <string name="cancel">Vazgeç</string>
     <string name="currentloc">Şimdiki konumunuz burası!</string>
     <string name="title">Başlık</string>
-    <string name="detailstoroute">Turla alakalı detayalr</string>
+    <string name="detailstoroute">Turla alakalı detaylar</string>
     <string name="save">Kaydet</string>
     <!--Tutorial Texts-->
     <string name="feedexp">Güncel akışı buradan görebilirsin...</string>

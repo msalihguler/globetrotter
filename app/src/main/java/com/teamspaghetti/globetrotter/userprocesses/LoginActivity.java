@@ -34,7 +34,7 @@ public class LoginActivity extends Activity{
     TextView title;
     EditText email,password;
     ProgressDialog pDialog;
-    String url = "http://192.168.1.251:3000/login";
+    String url = "http://192.168.1.252:3000/login";
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class LoginActivity extends Activity{
         Typeface font = Typeface.createFromAsset(getAssets(), "deneme.ttf");
         login.setTypeface(font);
         title.setTypeface(font);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

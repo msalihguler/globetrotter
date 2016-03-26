@@ -26,7 +26,7 @@ public class CreateTravelPlan extends Activity {
 
     EditText title,explanation;
     Button saveRoute;
-    String url = "192.168.1.251:3000/saveroute";
+    String url = "192.168.1.252:3000/saveroute";
     ProgressDialog pDialog;
     String title_send,explanation_send,city,latitude,longitude,location_details,creator;
     SharedPreferences sharedPreferences;

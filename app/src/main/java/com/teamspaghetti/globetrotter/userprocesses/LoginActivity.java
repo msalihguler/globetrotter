@@ -34,7 +34,7 @@ public class LoginActivity extends Activity{
     TextView title;
     EditText email,password;
     ProgressDialog pDialog;
-    String url = "http://192.168.1.252:3000/login";
+    String url = "http://192.168.1.244:3000/login";
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

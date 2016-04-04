@@ -93,7 +93,7 @@ public class RegisterActivity extends Activity {
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
         String userid,user;
-
+        int result = 0;
         @Override
         protected void onPreExecute() {
             pDialog = new ProgressDialog(RegisterActivity.this);
@@ -104,7 +104,7 @@ public class RegisterActivity extends Activity {
 
         @Override
         protected Integer doInBackground(String... params) {
-            Integer result = 0;
+
             HttpURLConnection urlConnection;
             try {
                 URL url = new URL(params[0]);
@@ -136,7 +136,7 @@ public class RegisterActivity extends Activity {
                     JSONObject jsonObject = new JSONObject(response.toString());
                     Log.e("id",jsonObject.get("user_id").toString());
                     user = jsonObject.get("username").toString();
-                    userid = jsonObject.get("userid").toString();
+                    userid = jsonObject.get("user_id").toString();
                     sharedPreferences.edit().putString("username",user).commit();
                     sharedPreferences.edit().putString("userid",userid).commit();
                     result = 1; // Successful

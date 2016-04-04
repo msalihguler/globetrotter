@@ -13,7 +13,7 @@ import com.teamspaghetti.globetrotter.R;
  */
 public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.feed_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.feed_item, container, false);
         return rootView;
     }
 

@@ -26,7 +26,7 @@ public class CreateTravelPlan extends Activity {
 
     EditText title,explanation;
     Button saveRoute;
-    String url = "192.168.1.244:3000/saveroute";
+    String url = "http://192.168.1.244:3000/createroute";
     ProgressDialog pDialog;
     String title_send,explanation_send,city,latitude,longitude,location_details,creator;
     SharedPreferences sharedPreferences;
@@ -74,11 +74,11 @@ public class CreateTravelPlan extends Activity {
                 String charset = "UTF-8";
 
                 String s = "{\"title\":\"" + URLEncoder.encode(title_send, charset)+"\",";
-                s += "{\"latitude\":\"" + URLEncoder.encode(latitude, charset)+"\",";
-                s += "{\"longitude\":\"" + URLEncoder.encode(longitude, charset)+"\",";
-                s += "{\"location_details\":\"" + URLEncoder.encode(title_send, charset)+"\",";
-                s += "{\"city\":\"" + URLEncoder.encode(city, charset)+"\",";
-                s += "{\"creator\":\"" + URLEncoder.encode(sharedPreferences.getString("username","default_name"), charset)+"\",";
+                s += "\"latitude\":\"" + URLEncoder.encode(latitude, charset)+"\",";
+                s += "\"longitude\":\"" + URLEncoder.encode(longitude, charset)+"\",";
+                s += "\"location_details\":\"" + URLEncoder.encode(title_send, charset)+"\",";
+                s += "\"city\":\"" + URLEncoder.encode(city, charset)+"\",";
+                s += "\"creator\":\"" + URLEncoder.encode(sharedPreferences.getString("username","default_name"), charset)+"\",";
                 s += "\"detail\":\"" + URLEncoder.encode(explanation_send, charset)+"\"}";
 
                 urlConnection.setFixedLengthStreamingMode(s.getBytes().length);
@@ -89,7 +89,7 @@ public class CreateTravelPlan extends Activity {
 
                 Log.e("status", String.valueOf(statusCode));
 
-                if (statusCode == 255) {
+                if (statusCode == 253) {
                     BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;

@@ -76,7 +76,7 @@ public class CreateTravelPlan extends Activity {
                 String s = "{\"title\":\"" + URLEncoder.encode(title_send, charset)+"\",";
                 s += "\"latitude\":\"" + URLEncoder.encode(latitude, charset)+"\",";
                 s += "\"longitude\":\"" + URLEncoder.encode(longitude, charset)+"\",";
-                s += "\"location_details\":\"" + URLEncoder.encode(title_send, charset)+"\",";
+                s += "\"location_details\":\"" + URLEncoder.encode(location_details, charset)+"\",";
                 s += "\"city\":\"" + URLEncoder.encode(city, charset)+"\",";
                 s += "\"creator\":\"" + URLEncoder.encode(sharedPreferences.getString("username","default_name"), charset)+"\",";
                 s += "\"detail\":\"" + URLEncoder.encode(explanation_send, charset)+"\"}";

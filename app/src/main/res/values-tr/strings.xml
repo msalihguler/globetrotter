@@ -40,6 +40,7 @@
     <string name="title">Başlık</string>
     <string name="detailstoroute">Turla alakalı detaylar</string>
     <string name="save">Kaydet</string>
+    <string name="savesuccesfull">Başarıyla kaydedildi!</string>
     <!--Tutorial Texts-->
     <string name="feedexp">Güncel akışı buradan görebilirsin...</string>
     <string name="notificationexp">Bildirimlerini buradan takip edebilirsin...</string>

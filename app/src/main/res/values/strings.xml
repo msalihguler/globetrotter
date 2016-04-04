@@ -39,7 +39,7 @@
     <string name="title">Title</string>
     <string name="detailstoroute">Details about route</string>
     <string name="save">Save</string>
-
+    <string name="savesuccesfull">Saved successfully!</string>
 
     <!--Tutorial Texts-->
     <string name="feedexp">You may see tour feed from here...</string>

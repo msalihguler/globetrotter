@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -39,9 +40,7 @@ public class CreateTravelPlan extends Activity {
         title = (EditText)findViewById(R.id.input_tourtitle);
         explanation = (EditText)findViewById(R.id.input_tourdetail);
         saveRoute=(Button)findViewById(R.id.saveroute);
-        title_send=title.getText().toString();
-        city="Ankara";
-        explanation_send=explanation.getText().toString();
+        city = "Ankara";
         latitude=getIntent().getExtras().getString("latitude");
         longitude=getIntent().getExtras().getString("longitude");
         location_details=getIntent().getExtras().getString("details");
@@ -49,11 +48,14 @@ public class CreateTravelPlan extends Activity {
         saveRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                title_send=title.getText().toString();
+                explanation_send=explanation.getText().toString();
                 new SaveRoute().execute(url);
             }
         });
     }
     class SaveRoute extends AsyncTask<String, String, Integer> {
+        int result=0;
         @Override
         protected void onPreExecute() {
             pDialog= new ProgressDialog(CreateTravelPlan.this);
@@ -64,7 +66,7 @@ public class CreateTravelPlan extends Activity {
 
         @Override
         protected Integer doInBackground(String... params) {
-            Integer result = 0;
+
             HttpURLConnection urlConnection;
             try {
                 URL url = new URL(params[0]);
@@ -74,7 +76,7 @@ public class CreateTravelPlan extends Activity {
                 String charset = "UTF-8";
 
                 String s = "{\"title\":\"" + URLEncoder.encode(title_send, charset)+"\",";
-                s += "\"latitude\":\"" + URLEncoder.encode(latitude, charset)+"\",";
+                    s += "\"latitude\":\"" + URLEncoder.encode(latitude, charset)+"\",";
                 s += "\"longitude\":\"" + URLEncoder.encode(longitude, charset)+"\",";
                 s += "\"location_details\":\"" + URLEncoder.encode(location_details, charset)+"\",";
                 s += "\"city\":\"" + URLEncoder.encode(city, charset)+"\",";
@@ -111,6 +113,13 @@ public class CreateTravelPlan extends Activity {
         protected void onPostExecute(Integer s) {
             super.onPostExecute(s);
             pDialog.dismiss();
+            if(result==1){
+                Toast.makeText(CreateTravelPlan.this,getString(R.string.savesuccesfull),Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(CreateTravelPlan.this,String.valueOf(result)+" error occured",Toast.LENGTH_SHORT).show();
+
+            }
         }
 
     }

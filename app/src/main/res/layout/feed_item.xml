@@ -61,6 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView3"
+                        android:tint="@color/colorPrimaryDark"
                         android:src="@drawable/heart" />
 
                     <TextView
@@ -84,6 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView8"
+                        android:tint="@color/colorPrimaryDark"
                         android:src="@drawable/comment" />
 
                     <TextView

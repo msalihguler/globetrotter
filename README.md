@@ -3,4 +3,4 @@ Globetrotter is a fully open-source and open to contribution. This application a
 
 For further information and questions you may contact me.
 
-email : #muhammedsalihguler@gmail.com
+email : muhammedsalihguler@gmail.com

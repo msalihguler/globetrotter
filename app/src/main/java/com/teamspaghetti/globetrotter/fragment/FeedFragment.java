@@ -9,12 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.teamspaghetti.globetrotter.Model.Routes;
 import com.teamspaghetti.globetrotter.R;
+import com.teamspaghetti.globetrotter.adapters.FeedAdapter;
 import com.teamspaghetti.globetrotter.mapoperations.MapActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -23,6 +27,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by msalihguler on 12.03.2016.
@@ -32,10 +37,16 @@ public class FeedFragment extends Fragment {
     ProgressBar progressBar;
     JSONArray answer;
     String url = "http://192.168.1.159:3000/getroutes";
+    ListView feed;
+    ArrayList<Routes> routes = new ArrayList<Routes>();
+    FeedAdapter feedAdapter;
     int pagenumber = 0;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.feed_mainholder, container, false);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
+        feed = (ListView)rootView.findViewById(R.id.feedholder);
+        answer = new JSONArray();
+
         progressBar.setVisibility(View.VISIBLE);
 
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -69,7 +80,7 @@ public class FeedFragment extends Fragment {
                 urlConnection.setRequestMethod("POST");
                 String charset = "UTF-8";
                 pagenumber++;
-                String s = "{\"pagenumber\":\"" + URLEncoder.encode(String.valueOf(pagenumber), charset)+"\"}";
+                String s = "{\"pagenumber\":\"" +String.valueOf(pagenumber)+"\"}";
 
 
                 urlConnection.setFixedLengthStreamingMode(s.getBytes().length);
@@ -77,7 +88,7 @@ public class FeedFragment extends Fragment {
                 out.print(s);
                 out.close();
                 int statusCode = urlConnection.getResponseCode();
-                Log.e("status", String.valueOf(statusCode));
+                Log.d("status", String.valueOf(statusCode));
 
 
                 if (statusCode == 253) {
@@ -87,10 +98,8 @@ public class FeedFragment extends Fragment {
                     while ((line = r.readLine()) != null) {
                         response.append(line);
                     }
-                    Log.e("status", response.toString());
 
                     JSONObject jsonObject = new JSONObject(response.toString());
-                    answer = new JSONArray();
                     answer = jsonObject.getJSONArray("routes");
                     result = 1; // Successful
                 } else {
@@ -104,6 +113,21 @@ public class FeedFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer s) {
             super.onPostExecute(s);
+
+            routes.clear();
+            for(int i = 0;i<answer.length();i++){
+                try {
+                    routes.add(new Routes(answer.getJSONObject(i).getString("_id"),answer.getJSONObject(i).getString("creator"),
+                            answer.getJSONObject(i).getString("title"),answer.getJSONObject(i).getString("detail"),
+                            answer.getJSONObject(i).getString("likes"),answer.getJSONObject(i).getString("comments")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            feedAdapter = new FeedAdapter(getContext(),routes);
+            feed.setAdapter(feedAdapter);
+
             progressBar.setVisibility(View.GONE);
 
         }

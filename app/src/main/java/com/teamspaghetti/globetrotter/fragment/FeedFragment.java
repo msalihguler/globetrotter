@@ -117,9 +117,13 @@ public class FeedFragment extends Fragment {
             routes.clear();
             for(int i = 0;i<answer.length();i++){
                 try {
+                    JSONObject likejson = new JSONObject(answer.getJSONObject(i).getString("likes"));
+                    JSONArray likenumber = likejson.getJSONArray("likes");
+                    JSONObject commentjson = new JSONObject(answer.getJSONObject(i).getString("comments"));
+                    JSONArray commentnumber = commentjson.getJSONArray("comments");
                     routes.add(new Routes(answer.getJSONObject(i).getString("_id"),answer.getJSONObject(i).getString("creator"),
                             answer.getJSONObject(i).getString("title"),answer.getJSONObject(i).getString("detail"),
-                            answer.getJSONObject(i).getString("likes"),answer.getJSONObject(i).getString("comments")));
+                            String.valueOf(likenumber.length()),String.valueOf(commentnumber.length())));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

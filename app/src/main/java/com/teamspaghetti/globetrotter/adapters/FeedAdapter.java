@@ -112,6 +112,7 @@ public class FeedAdapter extends ArrayAdapter<Routes> {
                                while ((line = r.readLine()) != null) {
                                    response.append(line);
                                }
+                               Log.d("result", response.toString());
 
                             //   JSONObject jsonObject = new JSONObject(response.toString());
 

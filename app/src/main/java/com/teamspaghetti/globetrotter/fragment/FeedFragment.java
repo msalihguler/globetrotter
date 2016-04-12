@@ -31,7 +31,7 @@ public class FeedFragment extends Fragment {
     FloatingActionButton fab;
     ProgressBar progressBar;
     JSONArray answer;
-    String url = "http://192.168.1.244:3000/getroutes";
+    String url = "http://192.168.1.159:3000/getroutes";
     int pagenumber = 0;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.feed_mainholder, container, false);

@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,8 +33,7 @@
         <activity android:name=".mapoperations.MapActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBbJHEfhlpJ4ce9N4dM2NO4fCfSSZ6jvnQ"/>
-
+            android:value="AIzaSyCv-mSRDR34pJgofwcwvLIuJXBGIzyKIsQ"/>
     </application>
 
 </manifest>

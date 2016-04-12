@@ -27,7 +27,7 @@ public class CreateTravelPlan extends Activity {
 
     EditText title,explanation;
     Button saveRoute;
-    String url = "http://192.168.1.244:3000/createroute";
+    String url = "http://192.168.1.159:3000/createroute";
     ProgressDialog pDialog;
     String title_send,explanation_send,city,latitude,longitude,location_details,creator;
     SharedPreferences sharedPreferences;
@@ -75,13 +75,13 @@ public class CreateTravelPlan extends Activity {
                 urlConnection.setRequestMethod("POST");
                 String charset = "UTF-8";
 
-                String s = "{\"title\":\"" + URLEncoder.encode(title_send, charset)+"\",";
-                    s += "\"latitude\":\"" + URLEncoder.encode(latitude, charset)+"\",";
-                s += "\"longitude\":\"" + URLEncoder.encode(longitude, charset)+"\",";
-                s += "\"location_details\":\"" + URLEncoder.encode(location_details, charset)+"\",";
-                s += "\"city\":\"" + URLEncoder.encode(city, charset)+"\",";
-                s += "\"creator\":\"" + URLEncoder.encode(sharedPreferences.getString("username","default_name"), charset)+"\",";
-                s += "\"detail\":\"" + URLEncoder.encode(explanation_send, charset)+"\"}";
+                String s = "{\"title\":\"" + title_send+"\",";
+                    s += "\"latitude\":\"" + latitude+"\",";
+                s += "\"longitude\":\"" + longitude+"\",";
+                s += "\"location_details\":\"" + location_details+"\",";
+                s += "\"city\":\"" + city+"\",";
+                s += "\"creator\":\"" +sharedPreferences.getString("username","default_name")+"\",";
+                s += "\"detail\":\"" + explanation_send+"\"}";
 
                 urlConnection.setFixedLengthStreamingMode(s.getBytes().length);
                 PrintWriter out = new PrintWriter(urlConnection.getOutputStream());

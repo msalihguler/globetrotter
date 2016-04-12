@@ -32,25 +32,25 @@
                         android:id="@+id/bckgrndImageView4"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         android:src="@drawable/four" />
                     <ImageView
                         android:id="@+id/bckgrndImageView3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         android:src="@drawable/three" />
                     <ImageView
                         android:id="@+id/bckgrndImageView2"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         android:src="@drawable/two" />
                     <ImageView
                         android:id="@+id/bckgrndImageView1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         android:src="@drawable/one" />
                 </ViewFlipper>
             </LinearLayout>

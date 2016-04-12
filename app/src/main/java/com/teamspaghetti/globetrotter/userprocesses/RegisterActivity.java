@@ -33,7 +33,7 @@ public class RegisterActivity extends Activity {
     Button register;
     EditText namesurname,email,password,password2,username;
     ProgressDialog pDialog;
-    String url = "http://192.168.1.244:3000/signup";
+    String url = "http://192.168.1.159:3000/signup";
     TextView title;
     SharedPreferences sharedPreferences;
     @Override

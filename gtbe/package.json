@@ -1,0 +1,24 @@
+{
+  "name": "globetrotter",
+  "version": "1.0.0",
+  "description": "Globe Trotter is a social network for travellers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "android",
+    "node.js",
+    "social",
+    "network"
+  ],
+  "author": "Muhammed Salih GULER",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "crypto": "0.0.3",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.7",
+    "urldecode": "^1.0.1"
+  }
+}

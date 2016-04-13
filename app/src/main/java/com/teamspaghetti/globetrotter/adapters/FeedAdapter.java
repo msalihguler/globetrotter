@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.teamspaghetti.globetrotter.MainActivity;
 import com.teamspaghetti.globetrotter.Model.Routes;
 import com.teamspaghetti.globetrotter.R;
 
@@ -33,6 +34,7 @@ import java.util.ArrayList;
  */
 public class FeedAdapter extends ArrayAdapter<Routes> {
     String link = "http://192.168.1.159:3000/getdata";
+    Context context;
     // View lookup cache
     private static class ViewHolder {
         TextView title;
@@ -46,6 +48,7 @@ public class FeedAdapter extends ArrayAdapter<Routes> {
 
     public FeedAdapter(Context context, ArrayList<Routes> routes) {
         super(context, R.layout.feed_item, routes);
+        this.context=context;
     }
 
     @Override
@@ -112,9 +115,16 @@ public class FeedAdapter extends ArrayAdapter<Routes> {
                                while ((line = r.readLine()) != null) {
                                    response.append(line);
                                }
-                               Log.d("result", response.toString());
+                               Log.e("response", response.toString());
 
                             //   JSONObject jsonObject = new JSONObject(response.toString());
+                               route.setLikes(response.toString());
+                               ((MainActivity) context).runOnUiThread(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                    notifyDataSetChanged();
+                                   }
+                               });
 
                                result = 1; // Successful
                            }

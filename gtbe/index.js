@@ -43,16 +43,48 @@ app.post("/getdata",function(req,res){
       if(err){
         res.status(512).send(err);
       }else{
-        var likearray = JSON.parse(user.likes);
-        likearray["likes"].push(id);
-        user.likes=JSON.stringify(likearray);
+        if(type==="like"){
+          var likelist = user.likes;
+        if(likelist.indexOf(id) > -1){
+          var likearray = JSON.parse(user.likes);
+          likearray["likes"].pop(id);
+          user.likes=JSON.stringify(likearray);
+
+          user.save(function(err){
+                      if(err) {
+                        res.status(52).send("wrong");
+                      } else {
+                        res.status(253).send(''+likearray.likes.length);
+                      }
+        });
+        }else{
+          var likearray = JSON.parse(user.likes);
+          likearray["likes"].push(id);
+          user.likes=JSON.stringify(likearray);
+
+          user.save(function(err){
+                      if(err) {
+                        res.status(52).send("wrong");
+                      } else {
+                        res.status(253).send(''+likearray.likes.length);
+                      }
+        });
+        }
+
+      }else{
+        var comment = req.body.comment;
+        var commentarray = JSON.parse(user.comments);
+        commentarray["comments"].push({"id":id,"comment":comment});
+        user.comments=JSON.stringify(commentarray);
         user.save(function(err){
                     if(err) {
                       res.status(52).send("wrong");
                     } else {
-                      res.status(253).send(JSON.stringify(user));
+                      res.status(253).send(String(commentarray.length));
                     }
       });
+      }
+
     }
   });
 

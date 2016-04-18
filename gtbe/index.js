@@ -38,6 +38,7 @@ app.post("/getroutes",function(req,res){
 app.post("/getdata",function(req,res){
   var type = req.body.type;
   var id = req.body.id;
+  var userid = req.body.userid;
   var db = routeprocesses();
     routeprocesses.findOne({"_id":id},function(err,user){
       if(err){
@@ -45,9 +46,9 @@ app.post("/getdata",function(req,res){
       }else{
         if(type==="like"){
           var likelist = user.likes;
-        if(likelist.indexOf(id) > -1){
+        if(likelist.indexOf(userid) > -1){
           var likearray = JSON.parse(user.likes);
-          likearray["likes"].pop(id);
+          likearray["likes"].pop(userid);
           user.likes=JSON.stringify(likearray);
 
           user.save(function(err){
@@ -59,7 +60,7 @@ app.post("/getdata",function(req,res){
         });
         }else{
           var likearray = JSON.parse(user.likes);
-          likearray["likes"].push(id);
+          likearray["likes"].push(userid);
           user.likes=JSON.stringify(likearray);
 
           user.save(function(err){

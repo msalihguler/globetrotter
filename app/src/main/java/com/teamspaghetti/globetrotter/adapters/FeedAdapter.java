@@ -1,6 +1,10 @@
 package com.teamspaghetti.globetrotter.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -13,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.teamspaghetti.globetrotter.FeedDetail;
 import com.teamspaghetti.globetrotter.MainActivity;
 import com.teamspaghetti.globetrotter.Model.Routes;
 import com.teamspaghetti.globetrotter.R;
@@ -35,6 +40,7 @@ import java.util.ArrayList;
 public class FeedAdapter extends ArrayAdapter<Routes> {
     String link = "http://192.168.1.159:3000/getdata";
     Context context;
+    SharedPreferences sharedPreferences;
     // View lookup cache
     private static class ViewHolder {
         TextView title;
@@ -56,7 +62,10 @@ public class FeedAdapter extends ArrayAdapter<Routes> {
         // Get the cdata item for this position
         final Routes route = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
+        final ViewHolder viewHolder; // view lookup cache stored in tag
+        sharedPreferences=getContext().getSharedPreferences("appPrefs",0);
+
+
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -80,7 +89,14 @@ public class FeedAdapter extends ArrayAdapter<Routes> {
         viewHolder.routeholder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),route.getID(),Toast.LENGTH_SHORT).show();
+                View sharedView = viewHolder.title;
+                String transitionName ="transitiontitle";
+
+
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, sharedView, transitionName);
+                Intent intent = new Intent(context, FeedDetail.class);
+                intent.putExtra("title",route.getTitle());
+                getContext().startActivity(intent,transitionActivityOptions.toBundle());
             }
         });
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +114,7 @@ public class FeedAdapter extends ArrayAdapter<Routes> {
                            urlConnection.setRequestMethod("POST");
 
                            String s = "{\"type\":\"like\",";
+                           s+="\"userid\":\""+sharedPreferences.getString("userid","def")+"\",";
                            s+="\"id\":\"" +route.getID()+"\"}";
 
                            urlConnection.setFixedLengthStreamingMode(s.getBytes().length);

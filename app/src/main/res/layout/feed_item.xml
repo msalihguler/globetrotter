@@ -30,6 +30,7 @@
                     android:text="Large Text"
                     android:id="@+id/title_item"
                     android:textColor="@color/colorPrimaryDark"
+                    android:transitionName="transitiontitle"
                     android:layout_marginLeft="6dp"
                     android:layout_marginTop="12dp" />
 

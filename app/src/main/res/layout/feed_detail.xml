@@ -9,8 +9,7 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/detailbar"
-            layout="@layout/toolbar" />
+            layout="@layout/detail_bar" />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -21,5 +20,6 @@
         android:textColor="@color/colorPrimaryDark"
         android:transitionName="transitiontitle"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center" />
 </LinearLayout>

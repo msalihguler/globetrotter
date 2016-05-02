@@ -18,7 +18,6 @@ public class FeedDetail extends AppCompatActivity {
         setContentView(R.layout.feed_detail);
         detail_title = (TextView)findViewById(R.id.title_detail);
         toolbar = (Toolbar)findViewById(R.id.detailbar);
-        ///push deneme
         detail_title.setText(getIntent().getExtras().getString("title"));
 
     }

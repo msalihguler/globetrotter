@@ -36,7 +36,7 @@ public class FeedFragment extends Fragment {
     FloatingActionButton fab;
     ProgressBar progressBar;
     JSONArray answer;
-    String url = "http://192.168.1.159:3000/getroutes";
+    String url = "http://192.168.1.6:3000/getroutes";
     ListView feed;
     ArrayList<Routes> routes = new ArrayList<Routes>();
     FeedAdapter feedAdapter;
